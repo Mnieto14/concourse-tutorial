@@ -13,8 +13,8 @@ resources:
   source:
     repository: mnieto0398/simple-image
     tag: latest
-    username: mnieto0398
-    password: Mozart1825!
+    username: ((registry-username))
+    password: ((registry-password))
 
 jobs:
 - name: build-and-push
