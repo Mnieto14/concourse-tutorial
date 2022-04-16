@@ -1,23 +1,20 @@
----
 resources:
 # The repo with our Dockerfile
 - name: concourse-examples
   type: git
   icon: github
   source:
-    uri: https://github.com/concourse/examples.git
+    uri: https://github.com/Mnieto14/concourse.git
     branch: master
 
-# Where we will push the image
 - name: simple-image
   type: registry-image
   icon: docker
   source:
-    # You need to provide these variables when
-    # setting the pipeline
-    repository: ((image-repo-name))/simple-image
-    username: ((registry-username))
-    password: ((registry-password))
+    repository: mnieto0398/simple-image
+    tag: latest
+    username: mnieto0398
+    password: Mozart1825!
 
 jobs:
 - name: build-and-push
@@ -30,8 +27,6 @@ jobs:
       image_resource:
         type: registry-image
         source:
-          # Check out the README for oci-build-task at
-          # https://github.com/concourse/oci-build-task
           repository: concourse/oci-build-task
       inputs:
       - name: concourse-examples
@@ -39,7 +34,6 @@ jobs:
       - name: image
       params:
         CONTEXT: concourse-examples/Dockerfiles/simple
-        UNPACK_ROOTFS: "true" # only needed if using image in a future step
       run:
         path: build
   - put: simple-image
