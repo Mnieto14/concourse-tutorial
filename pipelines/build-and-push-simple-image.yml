@@ -7,8 +7,8 @@ resources:
     uri: https://github.com/Mnieto14/concourse.git
     branch: master
 
-- name: simple-image
-  type: registry-image
+- name: docker-image
+  type: docker-image
   icon: docker
   source:
     repository: mnieto0398/simple-image
@@ -25,7 +25,7 @@ jobs:
     config:
       platform: linux
       image_resource:
-        type: registry-image
+        type: docker-image
         source:
           repository: concourse/oci-build-task
       inputs:
@@ -36,6 +36,6 @@ jobs:
         CONTEXT: concourse-examples/Dockerfiles/simple
       run:
         path: build
-  - put: simple-image
+  - put: docker-image
     params:
       image: image/image.tar
